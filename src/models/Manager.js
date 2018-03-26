@@ -14,7 +14,7 @@ class Manager extends Employee {
     }
 
     removeDeveloper(developer) {
-        this.developers = this.developers.filter(function(item) {
+        this.developers = this.developers.filter(function (item) {
             return item !== developer;
         });
     }
@@ -23,7 +23,7 @@ class Manager extends Employee {
         let devString = this.developers.map(function (item) {
             return item.name;
         }).join(', ');
-        return(
+        return (
             <p>{this.displayInfo()}; Разработчики: {devString === '' ? 'нет' : devString}</p>
         );
     }

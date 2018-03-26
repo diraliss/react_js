@@ -6,40 +6,41 @@ import Manager from "./models/Manager";
 
 class App extends Component {
     render() {
-        let man = new Manager('Алексей', 30, '12/12/1988', 1000, 'Management');
-        let dev0 = new Developer('Вася', 25, '08/08/1998', 1000, 'Development');
-        let dev1 = new Developer('Петя', 26, '05/05/1995', 2000, 'Development', man);
-        dev0.updateManager(man);
+        let aleksey = new Manager('Алексей', 30, '12/12/1988', 1000, 'Management');
+        let ivan = new Developer('Вася', 25, '08/08/1998', 1000, 'Development');
+        let petya = new Developer('Петя', 26, '05/05/1995', 2000, 'Development', aleksey);
+        ivan.updateManager(aleksey);
 
-        man.addDeveloper(dev0);
-        man.addDeveloper(dev1);
+        aleksey.addDeveloper(ivan);
+        aleksey.addDeveloper(petya);
 
-        man.removeDeveloper(dev0);
-        dev0.deleteManager();
+        aleksey.removeDeveloper(ivan);
+        ivan.deleteManager();
 
-        App.loop(5, function (num) {
-            console.log(num);
-        });
-
-        App.loop(0, function () {
-            console.log(0);
-        });
-
-        App.loop(5);
-
-        console.log(App.calculateArea('triangle', 3, 4, 5));
-        console.log(App.calculateArea('circle', 3));
-        console.log(App.calculateArea('rectangle', 3, 4));
+        App.testLoop();
+        App.testCalculateArea();
         return (
             <div className="App">
                 <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo"/>
                 </header>
-                {man.displayAllInfo()}
-                {dev0.displayAllInfo()}
-                {dev1.displayAllInfo()}
+                {aleksey.displayAllInfo()}
+                {ivan.displayAllInfo()}
+                {petya.displayAllInfo()}
             </div>
         );
+    }
+
+    static testLoop() {
+        App.loop(5, num => App.coloredConsole(num, 'green'));
+        App.loop(0, () => App.coloredConsole(0, 'green'));
+        App.loop(5);
+    }
+
+    static testCalculateArea() {
+        App.coloredConsole(App.calculateArea('triangle', 3, 4, 5));
+        App.coloredConsole(App.calculateArea('circle', 3));
+        App.coloredConsole(App.calculateArea('rectangle', 3, 4));
     }
 
     static loop(times = 0, callback = null) {
@@ -55,12 +56,10 @@ class App extends Component {
         switch (figure) {
             case 'circle':
                 let r = parseInt(input[0], 10);
-                area = (Math.PI * r * r).toFixed(2);
+                area = parseFloat((Math.PI * r * r).toFixed(2));
                 break;
             case 'triangle': {
-                let a = parseInt(input[0], 10);
-                let b = parseInt(input[1], 10);
-                let c = parseInt(input[2], 10);
+                let [a, b, c] = input.map(item => parseInt(item, 10));
                 let p = (a + b + c) / 2;
                 area = Math.sqrt(p * (p - a) * (p - b) * (p - c));
             }
@@ -68,8 +67,7 @@ class App extends Component {
             case 'square':
             case 'rectangle':
             default: {
-                let a = parseInt(input[0], 10);
-                let b = parseInt(input[1], 10);
+                let [a, b] = input.map(item => parseInt(item, 10));
                 area = a * b;
             }
         }
@@ -78,6 +76,14 @@ class App extends Component {
             figure: figure,
             input: input
         };
+    }
+
+    static coloredConsole(element, color = 'red') {
+        if (typeof element === 'object') {
+            console.log(element);
+        } else {
+            console.log(`%c ${element}`, `color: ${color}`)
+        }
     }
 }
 

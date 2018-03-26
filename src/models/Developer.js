@@ -22,7 +22,7 @@ class Developer extends Employee {
         if (this.manager) {
             manString = this.manager.name
         }
-        return(
+        return (
             <p>{this.displayInfo()}; Менеджер: {manString}</p>
         );
     }

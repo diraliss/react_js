@@ -11,7 +11,7 @@ class Employee extends Human {
     }
 
     displayInfo() {
-        return super.displayInfo() + ", " + this.salary + ", " + this.department;
+        return `${super.displayInfo()}, ${this.salary}, ${this.department}`;
     }
 }
 

@@ -10,7 +10,7 @@ class Human {
     }
 
     displayInfo() {
-        return this.name + ", " + this.age + ", " + this.dateOfBirth.toLocaleString().split(',')[0];
+        return `${this.name}, ${this.age}, ${this.dateOfBirth.toLocaleString().split(',')[0]}`;
     }
 }
 
