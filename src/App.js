@@ -19,6 +19,9 @@ class App extends Component {
 
         App.testLoop();
         App.testCalculateArea();
+
+        App.getUsers();
+
         return (
             <div className="App">
                 <header className="App-header">
@@ -41,6 +44,25 @@ class App extends Component {
         App.coloredConsole(App.calculateArea('triangle', 3, 4, 5));
         App.coloredConsole(App.calculateArea('circle', 3));
         App.coloredConsole(App.calculateArea('rectangle', 3, 4));
+    }
+
+    static getUsers() {
+        let users = [];
+        let count = 0;
+        let maxCount = 10;
+        let dataGetter = data => {
+            count++;
+            users.push(data);
+            if (count === maxCount) {
+                console.log(users);
+            }
+        };
+        const url = "https://jsonplaceholder.typicode.com/users/";
+        for (let i = 1; i <= maxCount; i++) {
+            fetch(`${url}${i}`)
+                .then(response => response.json())
+                .then(dataGetter)
+        }
     }
 
     static loop(times = 0, callback = null) {
