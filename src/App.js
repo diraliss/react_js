@@ -21,7 +21,7 @@ class App extends Component {
         App.testCalculateArea();
 
         App.getUsers();
-
+        Promise.all(App.getPromises()).then(users => console.log(users));
         return (
             <div className="App">
                 <header className="App-header">
@@ -65,8 +65,14 @@ class App extends Component {
         }
     }
 
+    static getPromises() {
+        const url = "https://jsonplaceholder.typicode.com/users/";
+        return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(number => fetch(`${url}${number}`)
+            .then(response => response.json()));
+    }
+
     static loop(times = 0, callback = null) {
-        if (times !== 0 && callback != null) {
+        if (times !== 0 && typeof callback === "function") {
             for (times; times > 0; times--) {
                 callback(times);
             }
